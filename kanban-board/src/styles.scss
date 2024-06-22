@@ -1,0 +1,38 @@
+// Vendors CSS
+@import '../node_modules/animate.css/animate.min.css';
+@import '../node_modules/overlayscrollbars/styles/overlayscrollbars.min.css';
+
+// Tailwind CSS
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Material
+@import './styles/material/theme';
+
+// Common
+@import './styles/common/variables';
+
+// Keyframes
+@import './styles/keyframes/loader';
+
+// Animations
+@import './styles/animations/spinner';
+
+// Mixins
+@import './styles/mixins/loading';
+
+// Components
+@import './styles/components/nav-bar';
+@import './styles/components/nav-list';
+@import './styles/components/dialog';
+
+// Views
+@import './styles/views/shell';
+@import './styles/views/not-found';
+@import './styles/views/sign-in';
+@import './styles/views/dashboard';
+@import './styles/views/kanban-board';
+
+// App
+@import './styles/app';
