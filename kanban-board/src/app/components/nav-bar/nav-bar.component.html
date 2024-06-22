@@ -1,0 +1,16 @@
+<mat-toolbar class="!h-full !w-full flex flex-row justify-between items-center !px-4 !bg-[#005CBB]">
+  <section class="flex flex-row items-center gap-4">
+    <button mat-icon-button matTooltip="Menu" (click)="toggleMenu()"><mat-icon class="text-white">menu</mat-icon></button>
+    <p class="text-lg font-semibold text-white">Kanban Board</p>
+  </section>
+  <button mat-icon-button matTooltip="Account" [matMenuTriggerFor]="menu"><mat-icon class="text-white">account_circle</mat-icon></button>
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item *ngIf="!currentUser()" [routerLink]="['/sign-in']">Sign in</button>
+  <ng-container *ngIf="currentUser()">
+    <button mat-menu-item>{{ currentUser().name }} | {{ currentUser().role | uppercase }}</button>
+    <button mat-menu-item [routerLink]="['/settings']">Settings</button>
+    <button mat-menu-item (click)="signOut()">Sign out</button>
+  </ng-container>
+</mat-menu>
