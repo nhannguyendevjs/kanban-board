@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { APIs } from '../enums/api';
-import { LocalStorageKeys } from '../enums/local-storage';
-import * as AuthType from '../types/auth.type';
+import { APIs } from '../enums/api.enum';
+import { LocalStorageKeys } from '../enums/local-storage.enum';
+import * as AuthTypes from '../types/auth.type';
 import { of } from 'rxjs';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class AuthService {
     return !!accessToken;
   }
 
-  signIn(signInPayload: AuthType.SignInPayload) {
-    // return this.#http.post<AuthType.SignInResponse>(APIs.auth.signIn, signInPayload);
+  signIn(signInPayload: AuthTypes.SignInPayload) {
+    // return this.#http.post<AuthTypes.SignInResponse>(APIs.auth.signIn, signInPayload);
     return of({
       success: true,
       data: {
@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   me() {
-    // return this.#http.get<AuthType.MeResponse>(APIs.auth.me);
+    // return this.#http.get<AuthTypes.MeResponse>(APIs.auth.me);
     return of({
       success: true,
       data: {

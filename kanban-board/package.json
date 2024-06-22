@@ -3,10 +3,19 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "test": "ng test",
+    "e2e": "npx playwright test",
+    "e2e-ui": "npx playwright test --ui",
+    "e2e-reports": "npx playwright show-report",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "node --max_old_space_size=10240 ./node_modules/@angular/cli/bin/ng serve",
+    "build_dev": "node --max_old_space_size=10240 ./node_modules/@angular/cli/bin/ng build --base-href / --configuration development",
+    "build_prod": "node --max_old_space_size=10240 ./node_modules/@angular/cli/bin/ng build --base-href / --configuration production",
+    "analyze_build": "ng build --stats-json",
+    "analyze_report": "npm run build_stats-json & webpack-bundle-analyzer dist/fsd-fe/stats.json",
+    "unit-test": "vitest",
+    "unit-test-ui": "vitest --ui --coverage.enabled=true",
+    "unit-test-coverage": "vitest run --coverage"
   },
   "private": true,
   "dependencies": {
@@ -34,8 +43,7 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "uuid": "^10.0.0",
-    "zod": "^3.23.8",
-    "zone.js": "~0.14.3"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.5",

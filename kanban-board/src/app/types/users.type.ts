@@ -1,4 +1,4 @@
-type User = {
+export type User = {
   _id: string;
   name: string;
   email: string;
@@ -7,5 +7,3 @@ type User = {
   role: string;
   avatar: string;
 };
-
-export { User };
