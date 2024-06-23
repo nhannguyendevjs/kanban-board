@@ -21,10 +21,12 @@
 // Mixins
 @import './styles/mixins/loading';
 
+// Elements
+@import './styles/elements/dialog';
+
 // Components
 @import './styles/components/nav-bar';
 @import './styles/components/nav-list';
-@import './styles/components/dialog';
 
 // Views
 @import './styles/views/shell';

@@ -16,7 +16,7 @@ export class NavListComponent {
       selected: true,
     },
     {
-      label: 'Kanban Board',
+      label: 'Kanban board',
       path: '/kanban-board',
       selected: false,
     },
