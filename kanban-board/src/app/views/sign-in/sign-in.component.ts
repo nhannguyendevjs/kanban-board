@@ -9,8 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
-import { LocalStorageKeys } from '../../enums/local-storage';
-import { ShellActions } from '../../enums/shell';
+import { LocalStorageKeys } from '../../enums/local-storage.enum';
+import { ShellActions } from '../../enums/shell.enum';
 import { AppStoreService } from '../../services/app-store.service';
 import { AuthService } from '../../services/auth.service';
 

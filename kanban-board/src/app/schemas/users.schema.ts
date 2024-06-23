@@ -1,6 +1,6 @@
 import zod from 'zod';
 
-const UserSchema = zod.object({
+export const UserSchema = zod.object({
   _id: zod.string(),
   name: zod.string(),
   email: zod.string().email(),
@@ -9,6 +9,3 @@ const UserSchema = zod.object({
   role: zod.string(),
   avatar: zod.string(),
 });
-
-
-export { UserSchema };

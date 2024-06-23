@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ShellActions } from '../../enums/shell';
+import { ShellActions } from '../../enums/shell.enum';
 import { environment } from '../../environments/environment';
 
 @Component({

@@ -1,6 +1,6 @@
-<ol class="h-full flex flex-col overflow-auto bg-[#DEDCE0]" overlay-scrollbars>
+<ol class="h-full flex flex-col overflow-auto bg-gray-200" overlay-scrollbars>
   @for (item of navItems; track item.label) {
-    <li [routerLink]="[item.path]" routerLinkActive="nav-link-activated" class="h-12 cursor-pointer px-4 flex items-center hover:bg-[#1A1B1F14] font-semibold">
+    <li [routerLink]="[item.path]" routerLinkActive="nav-link-activated" class="h-12 cursor-pointer px-4 flex items-center hover:bg-gray-300 font-semibold">
       {{ item.label }}
     </li>
   }

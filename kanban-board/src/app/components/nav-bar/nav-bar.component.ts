@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterLink } from '@angular/router';
 import { AppNavService } from '../../services/app-nav.service';
 import { AppStoreService } from '../../services/app-store.service';
-import * as UsersType from '../../types/users.type';
+import * as UserTypes from '../../types/users.type';
 
 const MaterialModules = [MatIconModule, MatButtonModule, MatMenuModule, MatDivider, MatToolbarModule, MatTooltipModule, MatTooltipModule];
 
@@ -27,7 +27,7 @@ export class NavBarComponent {
   #appNavService = inject(AppNavService);
   #destroyRef = inject(DestroyRef);
 
-  currentUser = signal<UsersType.User>(null);
+  currentUser = signal<UserTypes.User>(null);
 
   constructor() {
     toObservable(this.#appStoreService.me)
