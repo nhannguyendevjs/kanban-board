@@ -1,5 +1,5 @@
 import { NgForOf } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { RouterLink, RouterModule } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavListComponent {
-  readonly navItems = [
+  readonly navItems = signal([
     {
       label: 'Dashboard',
       path: '/dashboard',
@@ -26,5 +26,5 @@ export class NavListComponent {
       path: '/settings',
       selected: false,
     },
-  ];
+  ]);
 }

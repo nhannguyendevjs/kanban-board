@@ -1,6 +1,6 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NgForOf, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -15,6 +15,7 @@ import { fadeIn } from '../../animations/fade.animation';
 import * as KanbanBoardModels from '../../models/kanban-board.model';
 import { KanbanBoardService } from '../../services/kanban-board.service';
 import * as KanbanBoardTypes from '../../types/kanban-board.type';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCardModule, MatMenuModule, MatDialogModule, MatSelectModule, MatButtonModule];
 
@@ -30,7 +31,7 @@ const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCar
   animations: [fadeIn],
 })
 export class KanbanBoardComponent {
-  #cdr = inject(ChangeDetectorRef);
+  #destroyRef = inject(DestroyRef);
   #kanbanBoardService = inject(KanbanBoardService);
 
   board: KanbanBoardModels.KanbanBoard = new KanbanBoardModels.KanbanBoard(
@@ -55,7 +56,7 @@ export class KanbanBoardComponent {
     this.loadTasks();
     this.loadBoard();
 
-    this.searchControl.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+    this.searchControl.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.#destroyRef)).subscribe(() => {
       this.loadTasks();
       this.loadBoard();
     });
