@@ -1,6 +1,9 @@
+export const TaskStatusCodes = ['todo', 'inprogress', 'done'];
+
 export const TaskStatusNames = ['To do', 'In progress', 'Done'];
+
 export const TaskStatusEnum = {
   todo: 'To do',
-  inProgress: 'In progress',
+  inprogress: 'In progress',
   done: 'Done',
 } as const;

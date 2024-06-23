@@ -1,3 +1,4 @@
+import { WritableSignal } from '@angular/core';
 import * as UserTypes from '../types/users.type';
 
 export class Task {
@@ -20,29 +21,35 @@ export class Task {
 
 export class Column {
   name: string;
-  tasks: Task[];
+  tasks: WritableSignal<Task[]>;
 
-  constructor(name: string, tasks: Task[]) {
+  constructor(name: string, tasks: WritableSignal<Task[]>) {
     this.name = name;
     this.tasks = tasks;
   }
 
   addTask(task: Task) {
-    this.tasks.unshift(task);
-    return this.tasks;
+    this.tasks.update((value) => {
+      value.unshift(task);
+      return value;
+    });
+    return this.tasks();
   }
 
   removeTask(taskId: string) {
-    this.tasks = this.tasks.filter((task) => task._id !== taskId);
-    return this.tasks;
+    this.tasks.update((value) => {
+      value = value.filter((task) => task._id !== taskId);
+      return value;
+    });
+    return this.tasks();
   }
 }
 
 export class KanbanBoard {
   title: string;
-  columns: Column[];
+  columns: WritableSignal<Column[]>;
 
-  constructor(title: string, columns: Column[]) {
+  constructor(title: string, columns: WritableSignal<Column[]>) {
     this.title = title;
     this.columns = columns;
   }

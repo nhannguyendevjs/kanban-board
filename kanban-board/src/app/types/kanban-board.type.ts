@@ -1,4 +1,9 @@
+import { WritableSignal } from '@angular/core';
 import * as UserTypes from '../types/users.type';
+
+export type TaskStatusCode = 'todo' | 'inprogress' | 'done';
+
+export type TaskStatusName = 'To do' | 'In progress' | 'Done';
 
 export type Task = {
   _id: string;
@@ -10,12 +15,12 @@ export type Task = {
 
 export type Column = {
   title: string;
-  tasks: Task[];
+  tasks: WritableSignal<Task[]>;
   addTask: (task: Task) => Task[];
   removeTask: (taskId: string) => Task[];
 };
 
 export type KanbanBoard = {
   title: string;
-  columns: Column[];
+  columns: WritableSignal<Column[]>;
 };

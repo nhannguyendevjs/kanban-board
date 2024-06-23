@@ -1,19 +1,27 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NgForOf, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { debounceTime } from 'rxjs';
 import { fadeIn } from '../../animations/fade.animation';
 import * as KanbanBoardModels from '../../models/kanban-board.model';
+import { KanbanBoardService } from '../../services/kanban-board.service';
+import * as KanbanBoardTypes from '../../types/kanban-board.type';
 
-const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCardModule];
+const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCardModule, MatMenuModule, MatDialogModule, MatSelectModule, MatButtonModule];
 
 @Component({
   selector: 'app-kanban-board',
   standalone: true,
-  imports: [NgIf, RouterLink, NgForOf, ...MaterialModules],
+  imports: [NgIf, RouterLink, NgForOf, FormsModule, ReactiveFormsModule, ...MaterialModules],
   templateUrl: './kanban-board.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -22,185 +30,70 @@ const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCar
   animations: [fadeIn],
 })
 export class KanbanBoardComponent {
-  // ----------------------------------------------------------------
-  // Junk code written by Nhan Nguyen
-  // ----------------------------------------------------------------
-  board = new KanbanBoardModels.KanbanBoard('Task list', [
-    new KanbanBoardModels.Column('To do', [
-      new KanbanBoardModels.Task(
-        't1',
-        'Task 1',
-        'This is a description for task 1',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't2',
-        'Task 2',
-        'This is a description for task 2',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't3',
-        'Task 3',
-        'This is a description for task 3',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't4',
-        'Task 4',
-        'This is a description for task 4',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't5',
-        'Task 5',
-        'This is a description for task 5',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't6',
-        'Task 6',
-        'This is a description for task 6',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't7',
-        'Task 7',
-        'This is a description for task 7',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't8',
-        'Task 8',
-        'This is a description for task 8',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't9',
-        'Task 9',
-        'This is a description for task 9',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-      new KanbanBoardModels.Task(
-        't10',
-        'Task 10',
-        'This is a description for task 10',
-        'todo',
-        {
-          _id: 'u1',
-          name: 'Nhan Nguyen',
-          email: 'hoainhaannguyen@gmail.com',
-          phone: '+84 346 528 526',
-          address: 'Ho Chi Minh City, Vietnam',
-          role: 'admin',
-          avatar: 'https://avatars.githubusercontent.com/u/4723119?v=4',
-        },
-        0
-      ),
-    ]),
-    new KanbanBoardModels.Column('In progress', []),
-    new KanbanBoardModels.Column('Done', []),
-  ]);
-  // ----------------------------------------------------------------
-  // End of Junk code written by Nhan Nguyen
-  // ----------------------------------------------------------------
+  #cdr = inject(ChangeDetectorRef);
+  #kanbanBoardService = inject(KanbanBoardService);
+
+  board: KanbanBoardModels.KanbanBoard = new KanbanBoardModels.KanbanBoard(
+    'Task list',
+    signal([new KanbanBoardModels.Column('todo', signal([])), new KanbanBoardModels.Column('inprogress', signal([])), new KanbanBoardModels.Column('done', signal([]))])
+  );
+
+  searchControl = new FormControl('');
+  taskList: KanbanBoardModels.Task[] = [];
+
+  constructor() {
+    // ----------------------------------------------------------------
+    // Junk code written by Nhan Nguyen
+    // ----------------------------------------------------------------
+    this.#kanbanBoardService.dumpTasks();
+    // ----------------------------------------------------------------
+    // End of Junk code written by Nhan Nguyen
+    // ----------------------------------------------------------------
+  }
+
+  ngOnInit() {
+    this.loadTasks();
+    this.loadBoard();
+
+    this.searchControl.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+      this.loadTasks();
+      this.loadBoard();
+    });
+  }
+
+  loadTasks() {
+    this.taskList = this.#kanbanBoardService.getTasks(this.searchControl.value.trim().toLocaleLowerCase());
+  }
+
+  getTaskGroups() {
+    const columns = this.taskList.reduce(
+      (acc, cur) => {
+        acc[cur.status] = acc[cur.status] || [];
+        acc[cur.status].push(cur);
+        return acc;
+      },
+      { todo: [], inprogress: [], done: [] } as Record<KanbanBoardTypes.TaskStatusCode, KanbanBoardModels.Task[]>
+    );
+
+    return columns;
+  }
+
+  loadBoard() {
+    const taskGroups = this.getTaskGroups();
+    this.board.columns.update((columns) => {
+      columns.forEach((column) => {
+        column.tasks.set(taskGroups[column.name] ?? []);
+      });
+      return columns;
+    });
+  }
 
   drop(event: CdkDragDrop<any>) {
     if (event.previousContainer.id === event.container.id) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(event.container.data(), event.previousIndex, event.currentIndex);
     }
     if (event.previousContainer.id !== event.container.id) {
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      transferArrayItem(event.previousContainer.data(), event.container.data(), event.previousIndex, event.currentIndex);
     }
   }
 }
