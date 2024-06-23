@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { NgForOf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, OverlayscrollbarsModule],
+  imports: [RouterModule, RouterLink, NgForOf],
   templateUrl: './nav-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
