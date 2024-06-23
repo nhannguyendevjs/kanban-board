@@ -4,36 +4,36 @@
     <mat-icon>task_alt</mat-icon>
     <p class="text-2xl font-bold">{{ board.title }}</p>
   </section>
-  <input type="text" placeholder="Search tasks" class="border rounded px-4 py-2 min-w-[250px]" />
+  <input type="text" placeholder="Search tasks" class="border rounded px-4 py-2 min-w-[200px]" />
 </div>
 
-<div cdkDropListGroup class="h-full grid grid-cols-3 gap-6 overflow-auto">
+<div cdkDropListGroup class="h-full grid grid-cols-3 gap-4 overflow-auto">
   @for (column of board.columns; track column.name) {
     <!-- Column -->
     <section class="overflow-auto flex flex-col gap-4">
       <!-- Column > Header -->
       @if (column.name === 'To do') {
         <section class="flex flex-row items-center justify-between gap-2 border-t-8 rounded-t-md border-gray-600 p-2">
-          <p class="text-lg font-semibold text-gray-600">{{ column.name }} - {{column.tasks.length}} item(s)</p>
+          <p class="text-lg font-semibold text-gray-600">{{ column.name }} - {{ column.tasks.length }} item(s)</p>
           <mat-icon class="cursor-pointer" matTooltip="Add task">add_task</mat-icon>
         </section>
       }
 
       @if (column.name === 'In progress') {
         <section class="flex flex-row items-center justify-between gap-2 border-t-8 rounded-t-md border-blue-600 p-2">
-          <p class="text-lg font-semibold text-blue-600">{{ column.name }} - {{column.tasks.length}} item(s)</p>
+          <p class="text-lg font-semibold text-blue-600">{{ column.name }} - {{ column.tasks.length }} item(s)</p>
         </section>
       }
 
       @if (column.name === 'Done') {
         <section class="flex flex-row items-center justify-between gap-2 border-t-8 rounded-t-md border-green-600 p-2">
-          <p class="text-lg font-semibold text-green-600">{{ column.name }} - {{column.tasks.length}} item(s)</p>
+          <p class="text-lg font-semibold text-green-600">{{ column.name }} - {{ column.tasks.length }} item(s)</p>
         </section>
       }
       <!-- Column > Tasks -->
       <section class="h-[calc(100%-52px)] overflow-auto flex flex-col gap-4" cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
         @for (task of column.tasks; track task._id) {
-          <section class="px-2 py-4 rounded-lg shadow-md" cdkDrag>
+          <div class="px-2 py-4 rounded-lg shadow-md" @fadeIn cdkDrag>
             <section class="flex flex-row items-center justify-between pb-4">
               <p class="text-lg font-semibold">{{ task.title }}</p>
               <mat-icon class="cursor-pointer" matTooltip="More actions">more_vert</mat-icon>
@@ -43,7 +43,7 @@
               <img class="w-4 h-4 rounded-[50%]" [src]="task.assignee.avatar" alt="" srcset="" />
               <p class="text-sm">{{ task.assignee.name }}</p>
             </section>
-          </section>
+          </div>
         }
       </section>
     </section>

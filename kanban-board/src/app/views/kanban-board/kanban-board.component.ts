@@ -1,21 +1,27 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
+import { fadeIn } from '../../animations/fade.animation';
 import * as KanbanBoardModels from '../../models/kanban-board.model';
 
 @Component({
   selector: 'app-kanban-board',
   standalone: true,
-  imports: [CommonModule, MatIconModule, DragDropModule, MatTooltipModule],
+  imports: [MatIconModule, DragDropModule, MatTooltipModule, NgIf, RouterLink, NgForOf],
   templateUrl: './kanban-board.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'h-full p-4 flex flex-col gap-8',
+    class: 'h-full p-4 flex flex-col gap-6',
   },
+  animations: [fadeIn],
 })
 export class KanbanBoardComponent {
+  // ----------------------------------------------------------------
+  // Junk code written by Nhan Nguyen
+  // ----------------------------------------------------------------
   board = new KanbanBoardModels.KanbanBoard('Task list', [
     new KanbanBoardModels.Column('To do', [
       new KanbanBoardModels.Task(
@@ -182,6 +188,9 @@ export class KanbanBoardComponent {
     new KanbanBoardModels.Column('In progress', []),
     new KanbanBoardModels.Column('Done', []),
   ]);
+  // ----------------------------------------------------------------
+  // End of Junk code written by Nhan Nguyen
+  // ----------------------------------------------------------------
 
   drop(event: CdkDragDrop<any>) {
     if (event.previousContainer.id === event.container.id) {
