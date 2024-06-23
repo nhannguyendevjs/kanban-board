@@ -1,16 +1,19 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { fadeIn } from '../../animations/fade.animation';
 import * as KanbanBoardModels from '../../models/kanban-board.model';
 
+const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCardModule];
+
 @Component({
   selector: 'app-kanban-board',
   standalone: true,
-  imports: [MatIconModule, DragDropModule, MatTooltipModule, NgIf, RouterLink, NgForOf],
+  imports: [NgIf, RouterLink, NgForOf, ...MaterialModules],
   templateUrl: './kanban-board.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
