@@ -1,5 +1,5 @@
 import { NgForOf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
@@ -7,7 +7,6 @@ import { RouterLink, RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule, RouterLink, NgForOf],
   templateUrl: './nav-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavListComponent {
   readonly navItems = signal([

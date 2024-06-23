@@ -1,5 +1,5 @@
 import { NgIf, UpperCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
@@ -19,7 +19,6 @@ const MaterialModules = [MatIconModule, MatButtonModule, MatMenuModule, MatDivid
   standalone: true,
   imports: [RouterLink, UpperCasePipe, NgIf, ...MaterialModules],
   templateUrl: './nav-bar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavBarComponent {
   #router = inject(Router);

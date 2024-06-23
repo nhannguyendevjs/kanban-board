@@ -1,6 +1,7 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NgForOf, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -15,7 +16,6 @@ import { fadeIn } from '../../animations/fade.animation';
 import * as KanbanBoardModels from '../../models/kanban-board.model';
 import { KanbanBoardService } from '../../services/kanban-board.service';
 import * as KanbanBoardTypes from '../../types/kanban-board.type';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCardModule, MatMenuModule, MatDialogModule, MatSelectModule, MatButtonModule];
 
@@ -24,7 +24,6 @@ const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCar
   standalone: true,
   imports: [NgIf, RouterLink, NgForOf, FormsModule, ReactiveFormsModule, ...MaterialModules],
   templateUrl: './kanban-board.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'h-full p-4 flex flex-col gap-6',
   },
@@ -34,9 +33,13 @@ export class KanbanBoardComponent {
   #destroyRef = inject(DestroyRef);
   #kanbanBoardService = inject(KanbanBoardService);
 
-  board: KanbanBoardModels.KanbanBoard = new KanbanBoardModels.KanbanBoard(
+  board = new KanbanBoardModels.KanbanBoard(
     'Task list',
-    signal([new KanbanBoardModels.Column('todo', signal([])), new KanbanBoardModels.Column('inprogress', signal([])), new KanbanBoardModels.Column('done', signal([]))])
+    signal([
+      new KanbanBoardModels.Column('todo', signal([])),
+      new KanbanBoardModels.Column('inprogress', signal([])),
+      new KanbanBoardModels.Column('done', signal([])),
+    ]),
   );
 
   searchControl = new FormControl('');
