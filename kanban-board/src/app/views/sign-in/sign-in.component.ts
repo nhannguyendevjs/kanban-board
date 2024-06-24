@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -21,7 +21,6 @@ const MaterialModules = [MatCardModule, MatIconModule, MatInputModule, MatFormFi
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, NgIf, ...MaterialModules],
   templateUrl: './sign-in.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent {
   #authService = inject(AuthService);

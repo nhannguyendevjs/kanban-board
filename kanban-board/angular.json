@@ -52,14 +52,9 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": [
-              "lodash",
-              "luxon"
-            ],
+            "allowedCommonJsDependencies": ["lodash", "luxon"],
             "webWorkerTsConfig": "tsconfig.worker.json"
           },
           "configurations": {
@@ -120,9 +115,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [],
             "webWorkerTsConfig": "tsconfig.worker.json"
           }

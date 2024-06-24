@@ -1,5 +1,5 @@
 import { NgForOf } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
@@ -7,17 +7,16 @@ import { RouterLink, RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule, RouterLink, NgForOf],
   templateUrl: './nav-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavListComponent {
-  readonly navItems = [
+  readonly navItems = signal([
     {
       label: 'Dashboard',
       path: '/dashboard',
       selected: true,
     },
     {
-      label: 'Kanban Board',
+      label: 'Kanban board',
       path: '/kanban-board',
       selected: false,
     },
@@ -26,5 +25,5 @@ export class NavListComponent {
       path: '/settings',
       selected: false,
     },
-  ];
+  ]);
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AppStoreService } from '../../services/app-store.service';
 import * as UserTypes from '../../types/users.type';
@@ -8,7 +8,6 @@ import * as UserTypes from '../../types/users.type';
   standalone: true,
   imports: [],
   templateUrl: './dashboard.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
   #appStoreService = inject(AppStoreService);

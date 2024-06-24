@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShellActions } from '../../enums/shell.enum';
 import { environment } from '../../environments/environment';
@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
   standalone: true,
   imports: [],
   templateUrl: './shell.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShellComponent {
   #router = inject(Router);
