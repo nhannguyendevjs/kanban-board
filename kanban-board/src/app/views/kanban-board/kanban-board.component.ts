@@ -3,6 +3,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -16,8 +17,20 @@ import { fadeIn } from '../../animations/fade.animation';
 import * as KanbanBoardModels from '../../models/kanban-board.model';
 import { KanbanBoardService } from '../../services/kanban-board.service';
 import * as KanbanBoardTypes from '../../types/kanban-board.type';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
-const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCardModule, MatMenuModule, MatDialogModule, MatSelectModule, MatButtonModule];
+const MaterialModules = [
+  MatIconModule,
+  DragDropModule,
+  MatTooltipModule,
+  MatCardModule,
+  MatMenuModule,
+  MatDialogModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatBadgeModule,
+  NgxSkeletonLoaderModule,
+];
 
 @Component({
   selector: 'app-kanban-board',
@@ -35,11 +48,7 @@ export class KanbanBoardComponent {
 
   board = new KanbanBoardModels.KanbanBoard(
     'Task list',
-    signal([
-      new KanbanBoardModels.Column('todo', signal([])),
-      new KanbanBoardModels.Column('inprogress', signal([])),
-      new KanbanBoardModels.Column('done', signal([])),
-    ]),
+    signal([new KanbanBoardModels.Column('todo', signal([])), new KanbanBoardModels.Column('inprogress', signal([])), new KanbanBoardModels.Column('done', signal([]))])
   );
 
   searchControl = new FormControl('');
