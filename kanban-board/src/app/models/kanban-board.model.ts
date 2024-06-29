@@ -53,4 +53,12 @@ export class KanbanBoard {
     this.title = title;
     this.columns = columns;
   }
+
+  addTask(task: Task, columnName: string) {
+    const column = this.columns().find((column) => column.name === columnName);
+    if (column) {
+      column.addTask(task);
+    }
+    return this.columns();
+  }
 }

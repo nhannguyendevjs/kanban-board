@@ -17,7 +17,7 @@
         @if (column.name === 'todo') {
           <section class="flex flex-row items-center justify-between gap-2 border-t-8 rounded-t-md border-gray-600 p-2">
             <p class="text-lg font-semibold text-gray-600">To do - {{ column.tasks().length }} item(s)</p>
-            <mat-icon class="cursor-pointer" matTooltip="Add task">add_task</mat-icon>
+            <mat-icon class="cursor-pointer" matTooltip="Add task" (click)="addTask()">add_task</mat-icon>
           </section>
         }
 
