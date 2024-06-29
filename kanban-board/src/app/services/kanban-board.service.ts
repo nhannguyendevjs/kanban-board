@@ -172,7 +172,8 @@ export class KanbanBoardService {
   }
 
   dumpTasks() {
-    const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : this.getDumpTasks();
+    // const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : this.getDumpTasks();
+    const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
