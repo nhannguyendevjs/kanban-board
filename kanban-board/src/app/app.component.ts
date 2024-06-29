@@ -5,7 +5,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { TranslocoService } from '@jsverse/transloco';
 import { timer } from 'rxjs';
 import { LocalStorageKeys } from './enums/local-storage.enum';
-import { environment } from './environments/environment';
+import { environment } from '../environments/environment';
 import { AppStoreService } from './services/app-store.service';
 import { AuthService } from './services/auth.service';
 

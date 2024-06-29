@@ -7,7 +7,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideTransloco } from '@jsverse/transloco';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { routes } from './app.routes';
-import { environment } from './environments/environment';
+import { environment } from '../environments/environment';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { authorizationInterceptor } from './interceptors/authorization.interceptor';
 import { httpCacheInterceptor } from './interceptors/http-cache.interceptor';
