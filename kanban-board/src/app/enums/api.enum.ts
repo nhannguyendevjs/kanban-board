@@ -1,4 +1,4 @@
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 const TASKS_SERVICE_URL = environment.tasksServiceUrl + '/api/' + environment.tasksServiceVersion;
 
