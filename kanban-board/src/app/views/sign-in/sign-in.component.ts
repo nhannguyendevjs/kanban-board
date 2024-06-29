@@ -33,8 +33,8 @@ export class SignInComponent {
   isShowPassword = signal(false);
 
   signInForm = this.#formBuilder.group({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    username: new FormControl('admin', Validators.required),
+    password: new FormControl('admin', Validators.required),
   });
 
   constructor() {

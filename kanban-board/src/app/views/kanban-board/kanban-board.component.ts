@@ -1,28 +1,45 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NgForOf, NgIf } from '@angular/common';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { debounceTime } from 'rxjs';
 import { fadeIn } from '../../animations/fade.animation';
 import * as KanbanBoardModels from '../../models/kanban-board.model';
 import { KanbanBoardService } from '../../services/kanban-board.service';
 import * as KanbanBoardTypes from '../../types/kanban-board.type';
+import { AddTaskComponent } from './add-task/add-task.component';
 
-const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCardModule, MatMenuModule, MatDialogModule, MatSelectModule, MatButtonModule];
+const MaterialModules = [
+  MatIconModule,
+  DragDropModule,
+  MatTooltipModule,
+  MatCardModule,
+  MatMenuModule,
+  MatDialogModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatBadgeModule,
+  NgxSkeletonLoaderModule,
+  MatDialogModule,
+];
+
+const Dialogs = [AddTaskComponent];
 
 @Component({
   selector: 'app-kanban-board',
   standalone: true,
-  imports: [NgIf, RouterLink, NgForOf, FormsModule, ReactiveFormsModule, ...MaterialModules],
+  imports: [NgIf, RouterLink, NgForOf, FormsModule, ReactiveFormsModule, ...Dialogs, ...MaterialModules],
   templateUrl: './kanban-board.component.html',
   host: {
     class: 'h-full p-4 flex flex-col gap-6',
@@ -30,16 +47,14 @@ const MaterialModules = [MatIconModule, DragDropModule, MatTooltipModule, MatCar
   animations: [fadeIn],
 })
 export class KanbanBoardComponent {
+  #cdr = inject(ChangeDetectorRef);
   #destroyRef = inject(DestroyRef);
   #kanbanBoardService = inject(KanbanBoardService);
+  #dialog = inject(MatDialog);
 
   board = new KanbanBoardModels.KanbanBoard(
     'Task list',
-    signal([
-      new KanbanBoardModels.Column('todo', signal([])),
-      new KanbanBoardModels.Column('inprogress', signal([])),
-      new KanbanBoardModels.Column('done', signal([])),
-    ]),
+    signal([new KanbanBoardModels.Column('todo', signal([])), new KanbanBoardModels.Column('inprogress', signal([])), new KanbanBoardModels.Column('done', signal([]))])
   );
 
   searchControl = new FormControl('');
@@ -99,5 +114,21 @@ export class KanbanBoardComponent {
     if (event.previousContainer.id !== event.container.id) {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
+  }
+
+  addTask() {
+    const dialogSettings: MatDialogConfig = {
+      minWidth: '45vw',
+      maxWidth: '95vw',
+      maxHeight: '75vh',
+      autoFocus: false,
+      disableClose: true,
+    };
+    const dialogRef = this.#dialog.open(AddTaskComponent, dialogSettings);
+    dialogRef.afterClosed().subscribe((res) => {
+      this.board.addTask(res.data, 'todo');
+      this.#cdr.detectChanges();
+      this.#kanbanBoardService.updateLocalStorageDumpTasks(this.board);
+    });
   }
 }

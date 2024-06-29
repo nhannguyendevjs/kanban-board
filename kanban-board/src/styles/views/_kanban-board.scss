@@ -1,3 +1,9 @@
-app-kanban-board {
-  // TODO: Add styles here
+// TODO: Add styles here
+.assignee-status {
+  &.--active {
+    .mat-badge-content {
+      transform: translateX(-0.8rem);
+      background: theme('colors.green.500');
+    }
+  }
 }
