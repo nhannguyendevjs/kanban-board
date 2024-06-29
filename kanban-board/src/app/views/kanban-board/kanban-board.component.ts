@@ -114,6 +114,7 @@ export class KanbanBoardComponent {
     if (event.previousContainer.id !== event.container.id) {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
+    this.syncTasks();
   }
 
   addTask() {
@@ -127,8 +128,33 @@ export class KanbanBoardComponent {
     const dialogRef = this.#dialog.open(AddTaskComponent, dialogSettings);
     dialogRef.afterClosed().subscribe((res) => {
       this.board.addTask(res.data, 'todo');
-      this.#cdr.detectChanges();
-      this.#kanbanBoardService.updateLocalStorageDumpTasks(this.board);
+      this.syncTasks();
+    });
+  }
+
+  deleteTask(task: KanbanBoardModels.Task) {
+    this.board.deleteTask(task._id, task.status);
+    this.syncTasks();
+  }
+
+  updateTaskStatus(task: KanbanBoardModels.Task, status: KanbanBoardTypes.TaskStatusCode) {
+    this.board.moveTask(task._id, status);
+    this.syncTasks();
+  }
+
+  syncTasks() {
+    this.syncTasksStatus();
+    this.#kanbanBoardService.updateLocalStorageDumpTasks(this.board);
+    this.#cdr.detectChanges();
+  }
+
+  syncTasksStatus() {
+    this.board.columns().forEach((column) => {
+      column.tasks().forEach((task) => {
+        if (task) {
+          task.status = column.name;
+        }
+      });
     });
   }
 }
