@@ -172,21 +172,21 @@ export class KanbanBoardService {
   }
 
   dumpTasks() {
-    // const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : this.getDumpTasks();
-    const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+    const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : this.getDumpTasks();
+    // const tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
   updateLocalStorageDumpTasks(board: KanbanBoardModels.KanbanBoard) {
     const tasks = board.columns().reduce((acc, cur) => {
-      return acc.concat(cur.tasks());
+      return [...acc, ...cur.tasks()];
     }, [] as KanbanBoardModels.Task[]);
 
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
   getTasks(keyword: string) {
-    let tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]') ?? [];
+    let tasks: KanbanBoardModels.Task[] = JSON.parse(localStorage.getItem('tasks') ?? '[]') ?? [];
 
     if (keyword) {
       tasks = tasks.filter((task) => {
