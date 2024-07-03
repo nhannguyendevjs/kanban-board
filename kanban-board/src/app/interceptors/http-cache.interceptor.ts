@@ -10,7 +10,7 @@ export const httpCacheInterceptor: HttpInterceptorFn = (request, next) => {
   const excludedUrls = [];
 
   // processing only GET requests
-  if (request.method !== 'GET' && !excludedUrls.includes(request.url)) {
+  if (request.method !== 'GET' || excludedUrls.includes(request.url)) {
     return next(request);
   }
 
