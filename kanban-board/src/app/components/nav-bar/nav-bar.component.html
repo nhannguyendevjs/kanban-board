@@ -7,10 +7,14 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item *ngIf="!currentUser()" [routerLink]="['/sign-in']">Sign in</button>
-  <ng-container *ngIf="currentUser()">
-    <button mat-menu-item>{{ currentUser().name }} | {{ currentUser().role | uppercase }}</button>
-    <button mat-menu-item [routerLink]="['/settings']">Settings</button>
-    <button mat-menu-item (click)="signOut()">Sign out</button>
-  </ng-container>
+  @if (!currentUser()) {
+    <button mat-menu-item [routerLink]="['/sign-in']">Sign in</button>
+  }
+  @if (currentUser()) {
+    <ng-container>
+      <button mat-menu-item>{{ currentUser().name }} | {{ currentUser().role | uppercase }}</button>
+      <button mat-menu-item [routerLink]="['/settings']">Settings</button>
+      <button mat-menu-item (click)="signOut()">Sign out</button>
+    </ng-container>
+  }
 </mat-menu>
