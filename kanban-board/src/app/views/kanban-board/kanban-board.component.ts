@@ -1,5 +1,5 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,7 +39,7 @@ const Dialogs = [AddTaskComponent];
 @Component({
   selector: 'app-kanban-board',
   standalone: true,
-  imports: [NgIf, RouterLink, NgForOf, FormsModule, ReactiveFormsModule, ...Dialogs, ...MaterialModules],
+  imports: [NgIf, NgForOf, NgClass, RouterLink, FormsModule, ReactiveFormsModule, ...Dialogs, ...MaterialModules],
   templateUrl: './kanban-board.component.html',
   host: {
     class: 'h-full p-4 flex flex-col gap-6',

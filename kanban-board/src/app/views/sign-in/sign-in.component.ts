@@ -13,13 +13,14 @@ import { LocalStorageKeys } from '../../enums/local-storage.enum';
 import { ShellActions } from '../../enums/shell.enum';
 import { AppStoreService } from '../../services/app-store.service';
 import { AuthService } from '../../services/auth.service';
+import { ConditionalPipe } from '../../pipes/conditional.pipe';
 
 const MaterialModules = [MatCardModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatProgressBarModule, MatCheckboxModule];
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf, ...MaterialModules],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, ConditionalPipe, ...MaterialModules],
   templateUrl: './sign-in.component.html',
 })
 export class SignInComponent {
@@ -73,6 +74,14 @@ export class SignInComponent {
         },
       });
     }
+  }
+
+  isUsernameValid() {
+    return this.signInForm.get('username')?.touched && this.signInForm.get('username')?.errors?.['required']
+  }
+
+  isPasswordValid() {
+    return this.signInForm.get('password')?.touched && this.signInForm.get('password')?.errors?.['required']
   }
 
   @HostListener('document:keydown.enter', ['$event']) onEnter(event: KeyboardEvent) {
