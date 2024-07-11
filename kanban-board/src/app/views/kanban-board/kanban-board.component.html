@@ -10,7 +10,7 @@
 
   <!-- Board > Columns -->
   <section class="overflow-auto">
-    <section cdkDropListGroup class="min-w-[1024px] h-full grid grid-cols-3 gap-4 overflow-auto">
+    <section cdkDropListGroup id="columnsContainer" class="min-w-[1024px] h-full grid grid-cols-3 gap-4 overflow-auto">
       @for (column of board.columns(); track column.name) {
         @if (column) {
           <!-- Column -->
@@ -39,7 +39,7 @@
             <section class="h-full overflow-auto flex flex-col gap-4 p-2" cdkDropList [cdkDropListData]="column.tasks()" (cdkDropListDropped)="drop($event)">
               @for (task of column.tasks(); track task._id; let first = $first; let last = $last) {
                 @if (task) {
-                  <mat-card class="cursor-move m-4" [ngClass]="{ 'mt-0': first, 'mb-0': last }" @fadeIn cdkDrag>
+                  <mat-card class="cursor-move m-4" [ngClass]="{ 'mt-0': first, 'mb-0': last }" @fadeIn cdkDragBoundary="#columnsContainer" cdkDrag>
                     <!-- Task > Toolbar -->
                     <mat-card-header class="flex flex-row items-center justify-between mb-4">
                       <mat-card-title>
